@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zealon.readingcloud.account.dao.UserMapper">
+
+    <resultMap id="BaseResultMap" type="cn.charlema.models.pojo.Submission">
+<!--        <id column="id" jdbcType="INTEGER" property="id" />-->
+        <result column="userID" jdbcType="INTEGER" property="user_id" />
+        <result column="problemID" jdbcType="INTEGER" property="problem_id" />
+        <result column="language" jdbcType="VARCHAR" property="language" />
+        <result column="core" jdbcType="VARCHAR" property="core" />
+        <result column="errorMessage" jdbcType="VARCHAR" property="error_message" />
+        <result column="userOutput" jdbcType="VARCHAR" property="user_output" />
+        <result column="submissTime" jdbcType="TIMESTAMP" property="submiss_time" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        user_id, problem_id, language, core, error_message, user_output, submiss_time
+    </sql>
+
+    <insert id="insert" parameterType="cn.charlema.models.pojo.Submission">
+      insert into submission (user_id, problem_id, language,
+        core, error_message, user_output, submiss_time
+        )
+      values (#{userID,jdbcType=INTEGER}, #{problemID,jdbcType=INTEGER}, #{language,jdbcType=VARCHAR},
+        #{core,jdbcType=VARCHAR}, #{errorMessage,jdbcType=VARCHAR}, #{userOutput,jdbcType=VARCHAR}, now()
+        )
+    </insert>
+
+    <select id="getSubmissonById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from  user
+        where user_id = #{UserID,jdbcType=Integer}
+    </select>
+</mapper>
